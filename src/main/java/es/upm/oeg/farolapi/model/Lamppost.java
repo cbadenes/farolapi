@@ -12,9 +12,26 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Lamppost {
 
+    String id;
+
     Double latitude;
 
     Double longitude;
 
-    String id;
+    Double wattage;
+
+    String lamp;
+
+    String height; //low-medium-high
+
+    String light;
+
+    String color;
+
+    Boolean covered;
+
+    String status;
+
+    String pollution; //low-medium-high
+
 }
