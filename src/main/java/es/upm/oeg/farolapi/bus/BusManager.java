@@ -94,10 +94,11 @@ public class BusManager {
         }
     }
 
-    public void post(String msg, String key) {
+    public boolean post(String msg, String key) {
         try {
             LOG.debug("post event: " + msg + " to: " + key);
             this.client.publish(channel, EXCHANGE, key, msg.getBytes());
+            return true;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
- * Created on 21/05/16:
+ * Created on 23/05/16:
  *
  * @author cbadenes
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Lamppost {
+public class LamppostMark {
 
     String id;
 
@@ -18,20 +18,10 @@ public class Lamppost {
 
     Double longitude;
 
-    Double wattage;
-
-    String lamp;
-
-    String height; //low-medium-high
-
-    String light;
+    Double radius;
 
     String color;
 
-    Boolean covered;
-
-    String status;
-
-    String pollution; //low-medium-high
+    String pollution;
 
 }
