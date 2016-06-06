@@ -3,3 +3,8 @@
  Then you can invoke it like this: /etc/init.d/MyService start.
 
  And you can make it start automatically by running update-rc.d MyService defaults
+
+
+
+ ## SpringBoot Profile
+ java -jar -Dspring.profiles.active=pre farolapi-0.1.jar 5555
