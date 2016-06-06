@@ -159,6 +159,16 @@
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
         </repository>
+
+        <!-- Test Utils Repository -->
+        <repository>
+            <id>test-utils</id>
+            <url>https://raw.github.com/cbadenes/test-utils/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>   
     </repositories>
 
 
