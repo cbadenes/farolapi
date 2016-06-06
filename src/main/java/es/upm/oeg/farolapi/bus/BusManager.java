@@ -24,7 +24,8 @@ public class BusManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(BusManager.class);
 
-    private static final String EXCHANGE = "farolapp.annotations";
+    @Value("${farolapp.achannel.exchange}")
+    private String exchange;
 
     @Value("${farolapp.achannel.host}")
     private String host;
@@ -56,7 +57,7 @@ public class BusManager {
             this.client = new BusClient();
 //            this.client.connect(uri);
             this.client.connect(user,pwd, host, Integer.valueOf(port), keyspace);
-            this.channel = this.client.newChannel(EXCHANGE);
+            this.channel = this.client.newChannel(exchange);
             LOG.info("RabbitMQ Event-Bus initialized successfully");
         } catch (IOException | TimeoutException | NoSuchAlgorithmException | KeyManagementException | URISyntaxException e) {
             throw new RuntimeException(e);
@@ -77,7 +78,7 @@ public class BusManager {
     public void subscribe(BusSubscriber subscriber, String queue, String key) {
         try {
             LOG.debug("subscribing: " + subscriber + " to: " + queue + "/" + key);
-            this.client.consume(EXCHANGE, queue, key, subscriber);
+            this.client.consume(exchange, queue, key, subscriber);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -97,7 +98,7 @@ public class BusManager {
     public boolean post(String msg, String key) {
         try {
             LOG.debug("post event: " + msg + " to: " + key);
-            this.client.publish(channel, EXCHANGE, key, msg.getBytes());
+            this.client.publish(channel, exchange, key, msg.getBytes());
             return true;
         } catch (IOException e) {
             throw new RuntimeException(e);

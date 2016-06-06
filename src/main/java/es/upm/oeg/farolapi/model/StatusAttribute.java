@@ -12,11 +12,11 @@ import java.util.List;
  * @author cbadenes
  */
 @Data
-@ToString (callSuper = true)
-public class WattageAttribute extends Attribute {
+@ToString
+public class StatusAttribute extends Attribute {
 
     @Override
     public List<String> getRange() {
-        return Arrays.asList(new String[]{"low","medium","high"});
+        return Arrays.asList(new String[]{"blown", "damaged", "works"});
     }
 }

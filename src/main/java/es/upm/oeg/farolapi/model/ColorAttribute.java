@@ -13,10 +13,10 @@ import java.util.List;
  */
 @Data
 @ToString (callSuper = true)
-public class WattageAttribute extends Attribute {
+public class ColorAttribute extends Attribute {
 
     @Override
     public List<String> getRange() {
-        return Arrays.asList(new String[]{"low","medium","high"});
+        return Arrays.asList(new String[]{"red", "orange", "yellow", "white", "green", "blue"});
     }
 }

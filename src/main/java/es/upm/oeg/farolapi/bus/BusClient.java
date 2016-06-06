@@ -60,8 +60,8 @@ public class BusClient {
         factory.setHost(host);
         factory.setPort(port);
         factory.setVirtualHost(keyspace);
-        factory.setRequestedHeartbeat(60); // seconds
-        factory.setConnectionTimeout(60); // seconds
+        factory.setRequestedHeartbeat(600); // seconds
+        factory.setConnectionTimeout(600); // seconds
         factory.setAutomaticRecoveryEnabled(true);
         factory.setTopologyRecoveryEnabled(true);
         factory.setExceptionHandler(new BusExceptionHandler());

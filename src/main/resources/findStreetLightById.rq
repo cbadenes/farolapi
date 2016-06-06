@@ -1,0 +1,43 @@
+prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+prefix ap: <http://vocab.linkeddata.es/datosabiertos/def/urbanismo-infraestructuras/alumbrado-publico#>
+prefix skoslampara: <http://vocab.linkeddata.es/datosabiertos/kos/urbanismo-infraestructuras/alumbrado-publico/tipo-lampara/>
+
+
+select ?farola (str(?long) as ?longStr) (str(?lat) as ?latStr) (str(?pot) as ?potStr) ?altura ?lampara (str(?prot) as ?protStr) (str(?estado) as ?estadoStr) (str(?color) as ?colorStr) (str(?luz) as ?luzStr) (str(?cont) as ?contStr) (str(?heading) as ?headingStr) (str(?pitch) as ?pitchStr)
+from <http://farolas.linkeddata.es/resource>
+where {
+?farola a ap:PuntoDeAlumbrado;
+  ap:id ?fId;
+  geo:long ?long;
+  geo:lat ?lat .
+  OPTIONAL {
+   ?farola ap:potencia ?pot
+  }
+  OPTIONAL {
+   ?farola ap:altura ?altura
+  }
+  OPTIONAL {
+   ?farola ap:tieneTipoDeLampara ?lampara
+  }
+  OPTIONAL {
+     ?farola ap:proteccion ?prot
+  }
+  OPTIONAL {
+     ?farola ap:color ?color
+  }
+  OPTIONAL {
+     ?farola ap:luz ?luz
+  }
+  OPTIONAL {
+       ?farola ap:estado ?estado
+    }
+  OPTIONAL {
+     ?farola ap:contaminacion ?cont
+  }
+  OPTIONAL {
+     ?farola ap:heading ?heading
+  }
+  OPTIONAL {
+     ?farola ap:pitch ?pitch
+  }
+}

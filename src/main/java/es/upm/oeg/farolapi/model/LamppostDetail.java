@@ -2,7 +2,6 @@ package es.upm.oeg.farolapi.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.NonNull;
 
 /**
  * Created on 21/05/16:
@@ -21,19 +20,19 @@ public class LamppostDetail {
 
     WattageAttribute wattage;
 
-    Attribute lamp;
+    LampAttribute lamp;
 
-    Attribute height; //low-medium-high
+    HightAttribute height;
 
-    Attribute light;
+    LightAttribute light;
 
-    Attribute color;
+    ColorAttribute color;
 
-    Attribute covered;
+    CoveredAttribute covered;
 
-    Attribute status;
+    StatusAttribute status;
 
-    Attribute pollution; //low-medium-high
+    PollutionAttribute pollution;
 
     Double radius;
 

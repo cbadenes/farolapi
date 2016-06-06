@@ -18,7 +18,7 @@ public class LamppostMark {
 
     Double longitude;
 
-    Double radius;
+    String radius;
 
     String color;
 

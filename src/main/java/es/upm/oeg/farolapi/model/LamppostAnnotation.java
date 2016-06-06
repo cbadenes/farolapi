@@ -9,8 +9,11 @@ import lombok.Data;
  * @author cbadenes
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LamppostAnnotation {
+
+    Double latitude;
+
+    Double longitude;
 
     String wattage;
 
@@ -25,4 +28,6 @@ public class LamppostAnnotation {
     String covered;
 
     String status;
+
+    StreetViewPov streetViewPov;
 }

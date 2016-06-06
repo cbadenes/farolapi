@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @ToString (callSuper = true)
-public class WattageAttribute extends Attribute {
+public class HightAttribute extends Attribute {
 
     @Override
     public List<String> getRange() {

@@ -2,25 +2,17 @@ package es.upm.oeg.farolapi.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.ToString;
 
 /**
- * Created on 23/05/16:
+ * Created on 04/06/16:
  *
  * @author cbadenes
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AnnotationMessage {
+@ToString
+public class LamppostId {
 
     String id;
-
-    String uri;
-
-    String attribute;
-
-    String value;
-
-    Double latitude;
-
-    Double longitude;
 }

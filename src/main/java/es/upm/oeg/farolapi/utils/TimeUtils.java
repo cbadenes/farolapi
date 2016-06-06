@@ -24,7 +24,7 @@ public class TimeUtils {
                 shift = Long.valueOf(value) * 3600;
                 break;
         }
-        return System.currentTimeMillis()-shift;
+        return System.currentTimeMillis()-(shift*1000);
     }
 
 }

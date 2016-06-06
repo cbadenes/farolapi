@@ -1,6 +1,7 @@
 package es.upm.oeg.farolapi.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author cbadenes
  */
 @Data
+@ToString
 public class LamppostList {
 
     List<LamppostMark> lampposts;
