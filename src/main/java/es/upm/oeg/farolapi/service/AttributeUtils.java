@@ -17,4 +17,13 @@ public class AttributeUtils {
         }
     }
 
+    public static Integer uncategorize(String category){
+        switch(category.toLowerCase()){
+            case "low": return 99;
+            case "medium": return 125;
+            case "high": return 151;
+            default: return 0;
+        }
+    }
+
 }

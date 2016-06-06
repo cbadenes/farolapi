@@ -71,7 +71,7 @@ public class LamppostService {
 
     public void annotate(String lamppostId, LamppostAnnotation annotation) throws JsonProcessingException {
 
-        LOG.info("Annotate lappost: " + lamppostId + " with: " + annotation);
+        LOG.info("Annotate lamppost: " + lamppostId + " with: " + annotation);
 
         AnnotationMessage message = new AnnotationMessage();
         message.setId(lamppostId);
@@ -105,7 +105,8 @@ public class LamppostService {
         }
 
         if (!Strings.isNullOrEmpty(annotation.getWattage())){
-            annotate(lamppostId,uri, latitude, longitude,"wattage",annotation.getWattage());
+            Integer value = AttributeUtils.uncategorize(annotation.getWattage());
+            annotate(lamppostId,uri, latitude, longitude,"wattage",String.valueOf(value));
         }
 
         if (annotation.getStreetViewPov() != null){

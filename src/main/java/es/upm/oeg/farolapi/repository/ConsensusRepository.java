@@ -7,9 +7,15 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +25,7 @@ import java.util.List;
  * @author cbadenes
  */
 @Component
-public class ConsensusRepository {
+public class ConsensusRepository implements ResponseErrorHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConsensusRepository.class);
 
@@ -27,9 +33,16 @@ public class ConsensusRepository {
     @Setter
     private String endpoint;
 
+    private RestTemplate restTemplate;
+
+    @PostConstruct
+    public void setup(){
+        this.restTemplate = new RestTemplate();
+//        this.restTemplate.setErrorHandler(this);
+    }
 
     public List<LamppostMark> findMarks(Point bottomLeft, Point topRight){
-        RestTemplate restTemplate = new RestTemplate();
+
         LOG.info("requesting not validated lamppost from: " + endpoint);
 
         //TODO
@@ -39,30 +52,43 @@ public class ConsensusRepository {
                 .append("lat2=").append(topRight.getLatitude()).append("&")
                 .append("long2=").append(topRight.getLongitude())
                 .toString();
-        LamppostNewList list = restTemplate.getForObject(endpoint+"?"+parameters, LamppostNewList.class);
-
 
         List<LamppostMark> marks = new ArrayList<>();
+        try{
+            LamppostNewList list = restTemplate.getForObject(endpoint+"?"+parameters, LamppostNewList.class);
 
-        if (list!=null && list.getLampposts() != null && !list.getLampposts().isEmpty()){
-            for(LamppostInfo lamppost : list.getLampposts()){
-                LamppostMark mark = new LamppostMark();
-                mark.setId(lamppost.getId());
-                mark.setLatitude(lamppost.getLatitude());
-                mark.setLongitude(lamppost.getLongitude());
-                mark.setColor(lamppost.getColor());
-                mark.setPollution(lamppost.getPollution());
 
-                if (!Strings.isNullOrEmpty(lamppost.getWattage())){
-                    Integer value = Integer.valueOf(lamppost.getWattage());
-                    mark.setRadius(AttributeUtils.categorize(value));
+            if (list!=null && list.getLampposts() != null && !list.getLampposts().isEmpty()){
+                for(LamppostInfo lamppost : list.getLampposts()){
+                    LamppostMark mark = new LamppostMark();
+                    mark.setId(lamppost.getId());
+                    mark.setLatitude(lamppost.getLatitude());
+                    mark.setLongitude(lamppost.getLongitude());
+                    mark.setColor(lamppost.getColor());
+                    mark.setPollution(lamppost.getPollution());
+
+                    if (!Strings.isNullOrEmpty(lamppost.getWattage())){
+                        Integer value = Integer.valueOf(lamppost.getWattage());
+                        mark.setRadius(AttributeUtils.categorize(value));
+                    }
+                    marks.add(mark);
                 }
-                marks.add(mark);
             }
-        }
 
+        } catch (Exception e){
+            LOG.warn("Error connecting to consensus engine: " + endpoint + "=>" + e.getMessage());
+        }
         return marks;
 
     }
 
+    @Override
+    public boolean hasError(ClientHttpResponse clientHttpResponse) throws IOException {
+        return false;
+    }
+
+    @Override
+    public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
+        LOG.warn("Error connecting to: " + endpoint + "=>" + clientHttpResponse.getStatusText());
+    }
 }
