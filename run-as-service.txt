@@ -1,0 +1,5 @@
+ add the script to /etc/init.d.
+
+ Then you can invoke it like this: /etc/init.d/MyService start.
+
+ And you can make it start automatically by running update-rc.d MyService defaults

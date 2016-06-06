@@ -1,6 +1,7 @@
 package es.upm.oeg.farolapi.repository;
 
 import es.upm.oeg.farolapi.model.*;
+import es.upm.oeg.farolapi.service.AttributeUtils;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.query.*;
@@ -124,7 +125,7 @@ public class LamppostRepository {
                             if (soln.contains("potStr")){
                                 String wattage      = soln.get("potStr").asLiteral().getString();
                                 Integer value       = Integer.valueOf(wattage);
-                                String wattageLevel = categorizeValue(value);
+                                String wattageLevel = AttributeUtils.categorize(value);
                                 wat.setValue(wattageLevel);
                             }
                             detail.setWattage(wat);
@@ -323,7 +324,7 @@ public class LamppostRepository {
                             if (soln.contains("potStr")){
                                 String wattage      = soln.get("potStr").asLiteral().getString();
                                 Integer value = Integer.valueOf(wattage);
-                                String radius = categorizeValue(value);
+                                String radius = AttributeUtils.categorize(value);
                                 mark.setRadius(radius);
                             }
 
@@ -350,16 +351,6 @@ public class LamppostRepository {
             LOG.info("One of them is: " + marks.get(0));
         }
         return marks;
-    }
-
-    private String categorizeValue (Integer value){
-        if (value < 100){
-            return "low";
-        }else if (value > 150 ){
-            return "high";
-        } else {
-            return "medium";
-        }
     }
 
 

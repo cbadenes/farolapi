@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created on 23/05/16:
@@ -41,6 +42,10 @@ public class LamppostService {
     @Setter
     String keybinding;
 
+    @Value("${farolapp.prefix}")
+    @Setter
+    String prefix;
+
     private ObjectMapper jsonMapper;
 
     private static final String RESOURCE_URI = "http://farolas.linkeddata.es/resource/";
@@ -51,8 +56,7 @@ public class LamppostService {
     }
 
     public LamppostId create(Point point){
-        String coordinates  =  new StringBuilder().append(point.getLatitude()).append(point.getLongitude()).toString();
-        String id           = String.valueOf(coordinates.hashCode());
+        String id           = prefix + UUID.randomUUID().toString();
         LamppostId lamppostId   = new LamppostId();
         lamppostId.setId(id);
         LOG.info("Created lamppost: " + lamppostId + " from point: " + point);

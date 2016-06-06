@@ -52,6 +52,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
 
         <!-- Lombok -->
         <dependency>
@@ -151,6 +159,7 @@
                     <excludedGroups>es.cbadenes.lab.test.IntegrationTest</excludedGroups>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
@@ -168,7 +177,7 @@
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
             </snapshots>
-        </repository>   
+        </repository>
     </repositories>
 
 
