@@ -17,7 +17,7 @@ public class ApplicationTest {
         Application.main(new String[]{"5555"});
 
 
-        Thread.sleep(3000000);
+        while (true);
 
 
     }

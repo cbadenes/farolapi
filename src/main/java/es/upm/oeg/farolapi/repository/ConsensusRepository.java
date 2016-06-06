@@ -28,12 +28,18 @@ public class ConsensusRepository {
     private String endpoint;
 
 
-    public List<LamppostMark> findMarks(){
+    public List<LamppostMark> findMarks(Point bottomLeft, Point topRight){
         RestTemplate restTemplate = new RestTemplate();
         LOG.info("requesting not validated lamppost from: " + endpoint);
 
         //TODO
-        LamppostNewList list = restTemplate.getForObject(endpoint, LamppostNewList.class);
+        String parameters = new StringBuilder()
+                .append("lat1=").append(bottomLeft.getLatitude()).append("&")
+                .append("long1=").append(bottomLeft.getLongitude()).append("&")
+                .append("lat2=").append(topRight.getLatitude()).append("&")
+                .append("long2=").append(topRight.getLongitude())
+                .toString();
+        LamppostNewList list = restTemplate.getForObject(endpoint+"?"+parameters, LamppostNewList.class);
 
 
         List<LamppostMark> marks = new ArrayList<>();

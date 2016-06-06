@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.upm.oeg.farolapi.bus.BusManager;
 import es.upm.oeg.farolapi.model.*;
+import es.upm.oeg.farolapi.repository.ConsensusRepository;
 import es.upm.oeg.farolapi.repository.LamppostRepository;
 import lombok.Setter;
 import org.apache.jena.ext.com.google.common.base.Strings;
@@ -33,6 +34,10 @@ public class LamppostService {
     @Autowired
     @Setter
     LamppostRepository repository;
+
+    @Autowired
+    @Setter
+    ConsensusRepository consensusRepository;
 
     @Autowired
     @Setter
@@ -133,8 +138,7 @@ public class LamppostService {
             return repository.findByLatLong(bottomLeft,topRight,time);
         }else{
             LOG.info("Requesting not verified lamppost to consensus engine: " + bottomLeft + " - " + topRight);
-            //TODO ws.client to consensus engine
-            return Collections.emptyList();
+            return consensusRepository.findMarks(bottomLeft,topRight);
         }
     }
 
