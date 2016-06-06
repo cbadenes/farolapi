@@ -13,10 +13,11 @@ import java.util.List;
  */
 @Data
 @ToString (callSuper = true)
-public class HightAttribute extends Attribute {
+public class HeightAttribute extends Attribute {
 
     @Override
     public List<String> getRange() {
         return Arrays.asList(new String[]{"low","medium","high"});
     }
 }
+    

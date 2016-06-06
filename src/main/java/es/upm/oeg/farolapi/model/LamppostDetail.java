@@ -22,7 +22,7 @@ public class LamppostDetail {
 
     LampAttribute lamp;
 
-    HightAttribute height;
+    HeightAttribute height;
 
     LightAttribute light;
 

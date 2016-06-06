@@ -132,14 +132,14 @@ public class LamppostRepository {
                             detail.setWattage(wat);
 
                             // Height
-                            HightAttribute hat = new HightAttribute();
+                            HeightAttribute hat = new HeightAttribute();
                             if (soln.contains("altura")){
                                 String heightURI    = soln.get("altura").asResource().getURI();
                                 String altura       = StringUtils.substringAfterLast(heightURI,"/").toLowerCase();
                                 String height;
                                 switch(altura){
                                     case "alta":
-                                        height = "hight";
+                                        height = "high";
                                         break;
                                     case "media":
                                         height = "medium";
