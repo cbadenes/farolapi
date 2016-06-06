@@ -3,6 +3,7 @@ package es.upm.oeg.farolapi.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import es.upm.oeg.farolapi.bus.BusManager;
+import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
 import es.upm.oeg.farolapi.model.*;
 import es.upm.oeg.farolapi.repository.ConsensusRepository;
 import es.upm.oeg.farolapi.repository.LamppostRepository;
@@ -142,7 +143,7 @@ public class LamppostService {
         }
     }
 
-    public LamppostDetail readBy(String id) throws IOException {
+    public LamppostDetail readBy(String id) throws IOException, LamppostNotFoundException {
         LOG.info("Searching lamppost by id: " + id);
         return repository.findById(id);
     }

@@ -3,6 +3,7 @@ package es.upm.oeg.farolapi.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.base.Strings;
 import es.upm.oeg.farolapi.bus.BusManager;
+import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
 import es.upm.oeg.farolapi.model.*;
 import es.upm.oeg.farolapi.service.LamppostService;
 import es.upm.oeg.farolapi.utils.TimeUtils;
@@ -83,7 +84,7 @@ public class LamppostController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/lampposts/{id}", method = GET)
-    public LamppostDetail read(@PathVariable("id") String id) throws IOException {
+    public LamppostDetail read(@PathVariable("id") String id) throws IOException, LamppostNotFoundException {
         LOG.info(StringUtils.repeat("#",50));
         LOG.info("> Lampposts by:");
         LOG.info(StringUtils.repeat("-",10));
@@ -114,6 +115,11 @@ public class LamppostController {
         LOG.info("Point: " + point);
         LOG.info(StringUtils.repeat("#",50));
         return service.create(point);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleTodoNotFound(LamppostNotFoundException ex) {
     }
 
 }

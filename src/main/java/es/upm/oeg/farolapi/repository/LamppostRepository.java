@@ -1,5 +1,6 @@
 package es.upm.oeg.farolapi.repository;
 
+import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
 import es.upm.oeg.farolapi.model.*;
 import es.upm.oeg.farolapi.service.AttributeUtils;
 import lombok.Setter;
@@ -32,7 +33,7 @@ public class LamppostRepository {
     @Setter
     private String endpoint;
 
-    public LamppostDetail findById(String id) throws IOException {
+    public LamppostDetail findById(String id) throws IOException, LamppostNotFoundException {
 
         String queryTxt = "prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>\n" +
                 "prefix ap: <http://vocab.linkeddata" +
@@ -227,6 +228,7 @@ public class LamppostRepository {
         }
         if (details.isEmpty()){
             LOG.info("No lamppost found!");
+            throw new LamppostNotFoundException();
         }
         return details.get(0);
     }

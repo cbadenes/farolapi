@@ -2,6 +2,7 @@ package es.upm.oeg.farolapi.repository;
 
 import es.cbadenes.lab.test.IntegrationTest;
 import es.upm.oeg.farolapi.Application;
+import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
 import es.upm.oeg.farolapi.model.LamppostDetail;
 import es.upm.oeg.farolapi.model.LamppostMark;
 import es.upm.oeg.farolapi.model.Point;
@@ -24,7 +25,7 @@ public class LamppostRepositoryTest {
 
 
     @Test
-    public void readDetail() throws IOException {
+    public void readDetail() throws IOException, LamppostNotFoundException {
 
         ApplicationContext ctx = SpringApplication.run(Application.class, new String[]{});
 
