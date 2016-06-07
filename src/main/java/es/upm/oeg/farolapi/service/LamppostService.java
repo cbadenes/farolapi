@@ -144,6 +144,7 @@ public class LamppostService {
         }
     }
 
+
     public LamppostDetail readBy(String id) throws IOException, LamppostNotFoundException {
         LOG.info("Searching lamppost by id: " + id);
         return repository.findById(id);

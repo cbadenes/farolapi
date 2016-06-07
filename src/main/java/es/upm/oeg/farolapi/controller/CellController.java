@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.base.Strings;
 import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
 import es.upm.oeg.farolapi.model.*;
+import es.upm.oeg.farolapi.service.CellService;
 import es.upm.oeg.farolapi.service.LamppostService;
 import es.upm.oeg.farolapi.utils.TimeUtils;
 import lombok.Setter;
@@ -28,23 +29,27 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  * @author cbadenes
  */
 @RestController
-public class LamppostController {
+public class CellController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LamppostController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CellController.class);
 
     @Autowired
     @Setter
-    LamppostService service;
+    LamppostService lamppostService;
+
+    @Autowired
+    @Setter
+    CellService cellService;
 
     @PostConstruct
     public void setup(){
-        LOG.info("Service: /lampposts available");
+        LOG.info("Service: /cells available");
     }
 
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/lampposts", method = GET)
-    public LamppostList list(@RequestParam(value="lat1") Double lat1,
+    @RequestMapping(value = "/cells", method = GET)
+    public CellList list(@RequestParam(value="lat1") Double lat1,
                              @RequestParam(value="long1") Double long1,
                              @RequestParam(value="lat2") Double lat2,
                              @RequestParam(value="long2") Double long2,
@@ -52,7 +57,7 @@ public class LamppostController {
                              @RequestParam(value="verified",required = false, defaultValue = "true") Boolean verified
     ) throws IOException {
         LOG.info(StringUtils.repeat("#",50));
-        LOG.info("> List of lampposts by:");
+        LOG.info("> Cells inside of:");
         LOG.info(StringUtils.repeat("-",10));
         LOG.info("Lat1: " + lat1);
         LOG.info("Long1: " + long1);
@@ -70,48 +75,14 @@ public class LamppostController {
             from = Optional.of(TimeUtils.beforeTo(time));
         }
 
-        List<LamppostMark> marks = service.findMarksBy(bottomLeft, topRight, from, verified);
+        List<LamppostMark> marks = lamppostService.findMarksBy(bottomLeft, topRight, from, verified);
+
+        List<CellMark> cells = cellService.clusterize(marks);
 
         // Composing response
-        LamppostList response = new LamppostList();
-        response.setLampposts(marks);
+        CellList response = new CellList();
+        response.setCells(cells);
         return response;
-    }
-
-
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/lampposts/{id}", method = GET)
-    public LamppostDetail read(@PathVariable("id") String id) throws IOException, LamppostNotFoundException {
-        LOG.info(StringUtils.repeat("#",50));
-        LOG.info("> Lampposts by:");
-        LOG.info(StringUtils.repeat("-",10));
-        LOG.info("Id: " + id);
-        LOG.info(StringUtils.repeat("#",50));
-        return service.readBy(id);
-    }
-
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/lampposts/{id}/annotations", method = POST, consumes = "application/json;charset=UTF-8")
-    public void annotate(@PathVariable("id") String id,@RequestBody LamppostAnnotation
-            annotation) throws JsonProcessingException {
-        LOG.info(StringUtils.repeat("#",50));
-        LOG.info("> Annotate lamppost by:");
-        LOG.info(StringUtils.repeat("-",10));
-        LOG.info("Id: " + id);
-        LOG.info("Annotation: " + annotation);
-        LOG.info(StringUtils.repeat("#",50));
-        service.annotate(id,annotation);
-    }
-
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/lampposts", method = POST, consumes = "application/json;charset=UTF-8")
-    public LamppostId create(@RequestBody Point point) throws JsonProcessingException {
-        LOG.info(StringUtils.repeat("#",50));
-        LOG.info("> Create a lamppost by:");
-        LOG.info(StringUtils.repeat("-",10));
-        LOG.info("Point: " + point);
-        LOG.info(StringUtils.repeat("#",50));
-        return service.create(point);
     }
 
     @ExceptionHandler
