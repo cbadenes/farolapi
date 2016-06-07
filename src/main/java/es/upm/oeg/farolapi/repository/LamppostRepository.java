@@ -337,13 +337,6 @@ public class LamppostRepository {
                                 mark.setRadius(radius);
                             }
 
-                            // Color
-                            String color = null;
-                            if (soln.contains("colorStr")){
-                                color    = soln.get("colorStr").asLiteral().getString();
-                                mark.setColor(color);
-                            }
-
                             // Height
                             String height = null;
                             if (soln.contains("altura")){
@@ -352,11 +345,48 @@ public class LamppostRepository {
                             }
 
                             // Lamp
-                            String lamp = null;
+                            Lamp lamp = null;
                             if (soln.contains("lamp")){
                                 String lampURI      = soln.get("lamp").asResource().getURI();
-                                lamp                = StringUtils.substringAfterLast(lampURI,"/").toUpperCase();
+                                String lampString = StringUtils.substringAfterLast(lampURI, "/").toUpperCase();
+                                lamp = Lamp.valueOf(lampString);
                             }
+
+                            // Color
+                            String color = null;
+                            if (soln.contains("colorStr")){
+                                color    = soln.get("colorStr").asLiteral().getString();
+                                mark.setColor(color);
+                            }else if (lamp != null){
+                                switch(lamp){
+                                    case F: mark.setColor(Color.BLUE.getValue());
+                                        break;
+                                    case FCBC: mark.setColor(Color.BLUE.getValue());
+                                        break;
+                                    case H: mark.setColor(Color.YELLOW.getValue());
+                                        break;
+                                    case HM: mark.setColor(Color.YELLOW.getValue());
+                                        break;
+                                    case I: mark.setColor(Color.WHITE.getValue());
+                                        break;
+                                    case LED: mark.setColor(Color.ORANGE.getValue());
+                                        break;
+                                    case MC: mark.setColor(Color.GREEN.getValue());
+                                        break;
+                                    case PAR: mark.setColor(Color.RED.getValue());
+                                        break;
+                                    case VMAP: mark.setColor(Color.YELLOW.getValue());
+                                        break;
+                                    case VMCC: mark.setColor(Color.YELLOW.getValue());
+                                        break;
+                                    case VSAP: mark.setColor(Color.YELLOW.getValue());
+                                        break;
+                                    case VSBP: mark.setColor(Color.YELLOW.getValue());
+                                        break;
+                                }
+
+                            }
+
 
                             // Covered
                             String covered = null;
@@ -380,11 +410,8 @@ public class LamppostRepository {
                                 Height heightValue = null;
                                 if (!Strings.isNullOrEmpty(height)) heightValue = Height.from(height);
 
-                                Lamp lampValue = null;
-                                if (!Strings.isNullOrEmpty(lamp)) lampValue = Lamp.valueOf(lamp);
-
                                 Pollution pollution = PollutionUtils.calculate(coveredValue, color, wattageValue,
-                                        heightValue, lampValue);
+                                        heightValue, lamp);
 
                                 if (!pollution.equals(Pollution.UNKNOWN)) mark.setPollution(pollution.getValue());
                             }

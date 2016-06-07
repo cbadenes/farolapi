@@ -95,7 +95,7 @@ public class LamppostRepositoryTest {
         ParameterizedSparqlString pss = new ParameterizedSparqlString();
         pss.setCommandText("prefix ap: <http://vocab.linkeddata" +
                 ".es/datosabiertos/def/urbanismo-infraestructuras/alumbrado-publico#>\n " +
-                "select ?farola where {?farola a ap:PuntoDeAlumbrado}");
+                "select ?farola where {?farola a ap:PuntoDeAlumbrado} limit 15000");
         //pss.setLiteral("?fId", id);
         String sparqlQuery = pss.toString();
 
@@ -107,10 +107,12 @@ public class LamppostRepositoryTest {
 
         try (QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query)) {
 
-
             LOG.info("Executing sparql...");
             ResultSet results = qexec.execSelect();
             LOG.info("Reading result...");
+
+
+
 
             // collect all the values
             results.forEachRemaining(soln ->

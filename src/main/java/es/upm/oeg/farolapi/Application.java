@@ -40,6 +40,7 @@ public class Application {
         try {
 
             if (args != null && args.length > 0){
+
                 port = Integer.valueOf(args[0]);
             }
 
