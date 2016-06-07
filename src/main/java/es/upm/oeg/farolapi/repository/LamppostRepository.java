@@ -359,29 +359,29 @@ public class LamppostRepository {
                                 mark.setColor(color);
                             }else if (lamp != null){
                                 switch(lamp){
+                                    case VSAP: mark.setColor(Color.YELLOW.getValue());
+                                        break;
+                                    case VMCC: mark.setColor(Color.BLUE.getValue());
+                                        break;
+                                    case FCBC: mark.setColor(Color.ORANGE.getValue());
+                                        break;
+                                    case HM: mark.setColor(Color.WHITE.getValue());
+                                        break;
+                                    case MC: mark.setColor(Color.GREEN.getValue());//change this color
+                                        break;
+                                    case VSBP: mark.setColor(Color.RED.getValue()); //change this color
+                                        break;
                                     case F: mark.setColor(Color.BLUE.getValue());
                                         break;
-                                    case FCBC: mark.setColor(Color.BLUE.getValue());
-                                        break;
                                     case H: mark.setColor(Color.YELLOW.getValue());
-                                        break;
-                                    case HM: mark.setColor(Color.YELLOW.getValue());
                                         break;
                                     case I: mark.setColor(Color.WHITE.getValue());
                                         break;
                                     case LED: mark.setColor(Color.ORANGE.getValue());
                                         break;
-                                    case MC: mark.setColor(Color.GREEN.getValue());
-                                        break;
                                     case PAR: mark.setColor(Color.RED.getValue());
                                         break;
                                     case VMAP: mark.setColor(Color.YELLOW.getValue());
-                                        break;
-                                    case VMCC: mark.setColor(Color.YELLOW.getValue());
-                                        break;
-                                    case VSAP: mark.setColor(Color.YELLOW.getValue());
-                                        break;
-                                    case VSBP: mark.setColor(Color.YELLOW.getValue());
                                         break;
                                 }
 
