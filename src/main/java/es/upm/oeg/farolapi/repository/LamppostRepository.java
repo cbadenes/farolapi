@@ -346,8 +346,8 @@ public class LamppostRepository {
 
                             // Lamp
                             Lamp lamp = null;
-                            if (soln.contains("lamp")){
-                                String lampURI      = soln.get("lamp").asResource().getURI();
+                            if (soln.contains("lampara")){
+                                String lampURI      = soln.get("lampara").asResource().getURI();
                                 String lampString = StringUtils.substringAfterLast(lampURI, "/").toUpperCase();
                                 lamp = Lamp.valueOf(lampString);
                             }
