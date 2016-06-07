@@ -7,6 +7,7 @@ import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
 import es.upm.oeg.farolapi.model.*;
 import es.upm.oeg.farolapi.repository.ConsensusRepository;
 import es.upm.oeg.farolapi.repository.LamppostRepository;
+import es.upm.oeg.farolapi.utils.AttributeUtils;
 import lombok.Setter;
 import org.apache.jena.ext.com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

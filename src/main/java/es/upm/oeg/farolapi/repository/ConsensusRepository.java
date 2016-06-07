@@ -2,7 +2,7 @@ package es.upm.oeg.farolapi.repository;
 
 import com.google.common.base.Strings;
 import es.upm.oeg.farolapi.model.*;
-import es.upm.oeg.farolapi.service.AttributeUtils;
+import es.upm.oeg.farolapi.utils.AttributeUtils;
 import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 

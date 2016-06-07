@@ -20,4 +20,3 @@ public class HeightAttribute extends Attribute {
         return Arrays.asList(new String[]{"low","medium","high"});
     }
 }
-    

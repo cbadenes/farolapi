@@ -1,4 +1,4 @@
-package es.upm.oeg.farolapi.service;
+package es.upm.oeg.farolapi.utils;
 
 /**
  * Created on 06/06/16:

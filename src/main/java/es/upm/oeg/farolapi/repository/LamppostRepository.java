@@ -1,8 +1,10 @@
 package es.upm.oeg.farolapi.repository;
 
+import com.google.common.base.Strings;
 import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
 import es.upm.oeg.farolapi.model.*;
-import es.upm.oeg.farolapi.service.AttributeUtils;
+import es.upm.oeg.farolapi.utils.AttributeUtils;
+import es.upm.oeg.farolapi.utils.PollutionUtils;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jena.query.*;
@@ -96,6 +98,7 @@ public class LamppostRepository {
         Query query = QueryFactory.create(sparqlQuery);
         try (QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query)) {
             {
+
 
                 ResultSet results = qexec.execSelect();
 
@@ -248,7 +251,7 @@ public class LamppostRepository {
 
         // Select
         queryBuilder.append("select ?farola (str(?long) as ?longStr) (str(?lat) as ?latStr) (str(?pot) as ?potStr) (str(?color) " +
-                "as ?colorStr) (str(?cont) as ?contStr)\n");
+                "as ?colorStr) (str(?cont) as ?contStr) ?altura ?lampara (str(?prot) as ?protStr)  \n");
 
         // From
         queryBuilder.append("from <http://farolas.linkeddata.es/resource>\n");
@@ -262,6 +265,9 @@ public class LamppostRepository {
         queryBuilder.append("geo:long ?long;\n");
         queryBuilder.append("geo:lat ?lat .\n");
         queryBuilder.append("OPTIONAL { ?farola ap:potencia ?pot }\n");
+        queryBuilder.append("OPTIONAL { ?farola ap:altura ?altura }\n");
+        queryBuilder.append("OPTIONAL { ?farola ap:tieneTipoDeLampara ?lampara }\n");
+        queryBuilder.append("OPTIONAL { ?farola ap:proteccion ?prot }\n");
         queryBuilder.append("OPTIONAL { ?farola ap:color ?color }\n");
         queryBuilder.append("OPTIONAL {?farola ap:contaminacion ?cont}\n");
 
@@ -323,25 +329,65 @@ public class LamppostRepository {
                             }
 
                             // Radius
+                            String wattage = null;
                             if (soln.contains("potStr")){
-                                String wattage      = soln.get("potStr").asLiteral().getString();
+                                wattage      = soln.get("potStr").asLiteral().getString();
                                 Integer value = Integer.valueOf(wattage);
                                 String radius = AttributeUtils.categorize(value);
                                 mark.setRadius(radius);
                             }
 
                             // Color
+                            String color = null;
                             if (soln.contains("colorStr")){
-                                String color    = soln.get("colorStr").asLiteral().getString();
+                                color    = soln.get("colorStr").asLiteral().getString();
                                 mark.setColor(color);
                             }
+
+                            // Height
+                            String height = null;
+                            if (soln.contains("altura")){
+                                String altURI      = soln.get("altura").asResource().getURI();
+                                height             = StringUtils.substringAfterLast(altURI,"/").toUpperCase();
+                            }
+
+                            // Lamp
+                            String lamp = null;
+                            if (soln.contains("lamp")){
+                                String lampURI      = soln.get("lamp").asResource().getURI();
+                                lamp                = StringUtils.substringAfterLast(lampURI,"/").toUpperCase();
+                            }
+
+                            // Covered
+                            String covered = null;
+                            if (soln.contains("protStr")){
+                                covered    = soln.get("protStr").asLiteral().getString();
+                            }
+
 
                             // Pollution
                             if (soln.contains("contStr")){
                                 String pollution    = soln.get("contStr").asLiteral().getString();
                                 mark.setPollution(pollution);
-                            }
+                            }else{
+                                // Calculated Pollution
+                                Wattage wattageValue = null;
+                                if (!Strings.isNullOrEmpty(wattage)) wattageValue = Wattage.from(Integer.valueOf(wattage));
 
+                                Boolean coveredValue = true;
+                                if (!Strings.isNullOrEmpty(covered)) coveredValue = Boolean.valueOf(covered);
+
+                                Height heightValue = null;
+                                if (!Strings.isNullOrEmpty(height)) heightValue = Height.from(height);
+
+                                Lamp lampValue = null;
+                                if (!Strings.isNullOrEmpty(lamp)) lampValue = Lamp.valueOf(lamp);
+
+                                Pollution pollution = PollutionUtils.calculate(coveredValue, color, wattageValue,
+                                        heightValue, lampValue);
+
+                                if (!pollution.equals(Pollution.UNKNOWN)) mark.setPollution(pollution.getValue());
+                            }
 
                             marks.add(mark);
                         }
