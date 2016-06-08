@@ -40,6 +40,8 @@ public class CellService {
 
 
     public List<CellMark> clusterize(List<LamppostMark> marks){
+        if (marks == null || marks.isEmpty()) return Collections.emptyList();
+
         Integer k   = cellNumbers;
 
         KMeansPlusPlusClusterer clusterer = new KMeansPlusPlusClusterer(k);
