@@ -350,6 +350,7 @@ public class LamppostRepository {
                                 String lampURI      = soln.get("lampara").asResource().getURI();
                                 String lampString = StringUtils.substringAfterLast(lampURI, "/").toUpperCase();
                                 lamp = Lamp.valueOf(lampString);
+                                mark.setLamp(lampString);
                             }
 
                             // Color

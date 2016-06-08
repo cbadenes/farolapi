@@ -22,6 +22,8 @@ public class LamppostMark {
 
     String color;
 
+    String lamp;
+
     String pollution;
 
 }

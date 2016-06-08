@@ -4,6 +4,7 @@ import es.upm.oeg.farolapi.model.Height;
 import es.upm.oeg.farolapi.model.Lamp;
 import es.upm.oeg.farolapi.model.Pollution;
 import es.upm.oeg.farolapi.model.Wattage;
+import org.apache.tomcat.jni.Poll;
 
 /**
  * Created on 07/06/16:
@@ -18,17 +19,52 @@ public class PollutionUtils {
         Pollution pollution = Pollution.UNKNOWN;
 
 
-        if (covered != null && !covered) pollution = Pollution.HIGH;
-        else{
 
-            // not covered
-                if (wattage != null && wattage.equals(Wattage.HIGH)) pollution = Pollution.HIGH;
-                else{
-                    // wattage is MEDIUM or LOW
-                    if (height != null && !height.equals(Height.LOW)) pollution = Pollution.MEDIUM;
-                    else pollution = Pollution.LOW;
-                }
+        switch (lamp){
+            case VSAP:
+                pollution = Pollution.LOW;
+                break;
+            case VMCC:
+                pollution = Pollution.HIGH;
+                break;
+            case FCBC:
+                pollution = Pollution.MEDIUM;
+                break;
+            case HM:
+                pollution = Pollution.HIGH;
+                break;
+            case MC:
+                pollution = Pollution.MEDIUM;
+                break;
+            case VSBP:
+                pollution = Pollution.LOW;
+                break;
+            case F:
+                pollution = Pollution.HIGH;
+                break;
+            case H:
+                pollution = Pollution.HIGH;
+                break;
+            case I:
+                pollution = Pollution.MEDIUM;
+                break;
+            case LED:
+                pollution = Pollution.HIGH;
+                break;
+            case PAR:
+                pollution = Pollution.HIGH;
+                break;
+            case VMAP:
+                pollution = Pollution.HIGH;
+                break;
         }
+
+
+
+//        if (covered == null || wattage == null || height == null ) return pollution;
+//        if (!covered || wattage.equals(Wattage.HIGH)) pollution = Pollution.HIGH;
+//        else if (!wattage.equals(Wattage.HIGH) && height.equals(Height.HIGH)) pollution = Pollution.MEDIUM;
+//        else pollution = Pollution.LOW;
 
         return pollution;
 
