@@ -292,8 +292,8 @@ public class LamppostRepository {
             pss.setLiteral("?time1",time.get());
         String sparqlQuery = pss.toString();
 
-        LOG.info("Sparql Endpoint: " + endpoint + " ,  Query: " + sparqlQuery);
-
+        LOG.info("Sparql Endpoint: " + endpoint);
+        LOG.debug("Query: " + sparqlQuery);
         Query query = QueryFactory.create(sparqlQuery);
         return findMarks(query);
     }
