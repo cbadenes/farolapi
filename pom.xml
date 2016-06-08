@@ -188,6 +188,7 @@
                             <id>farolapi</id>
                             <mainClass>es.upm.oeg.farolapi.Application</mainClass>
                             <commandLineArguments>
+                                <commandLineArgument>80</commandLineArgument>
                                 <commandLineArgument>--spring.profiles.active=prodB</commandLineArgument>
                             </commandLineArguments>
                             <platforms>
