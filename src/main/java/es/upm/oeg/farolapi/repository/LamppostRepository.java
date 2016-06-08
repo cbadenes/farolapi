@@ -422,9 +422,9 @@ public class LamppostRepository {
                 );
             }
         }
-        LOG.info(marks.size() + "  marks read.");
+        LOG.info("< " + marks.size() + "  marks read.");
         if (!marks.isEmpty()){
-            LOG.info("One of them is: " + marks.get(0));
+            LOG.debug("One of them is: " + marks.get(0));
         }
         return marks;
     }

@@ -86,7 +86,6 @@ public class LamppostController {
         LOG.info("> Lampposts by:");
         LOG.info(StringUtils.repeat("-",10));
         LOG.info("Id: " + id);
-        LOG.info(StringUtils.repeat("#",50));
         return service.readBy(id);
     }
 
@@ -99,7 +98,6 @@ public class LamppostController {
         LOG.info(StringUtils.repeat("-",10));
         LOG.info("Id: " + id);
         LOG.info("Annotation: " + annotation);
-        LOG.info(StringUtils.repeat("#",50));
         service.annotate(id,annotation);
     }
 
@@ -110,7 +108,6 @@ public class LamppostController {
         LOG.info("> Create a lamppost by:");
         LOG.info(StringUtils.repeat("-",10));
         LOG.info("Point: " + point);
-        LOG.info(StringUtils.repeat("#",50));
         return service.create(point);
     }
 
