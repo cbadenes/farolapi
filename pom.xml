@@ -172,6 +172,76 @@
                 </configuration>
             </plugin>
 
+            <!-- JSW -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <configuration>
+                    <generateRepository>true</generateRepository>
+                    <repositoryLayout>flat</repositoryLayout>
+                    <useWildcardClassPath>true</useWildcardClassPath>
+                    <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+                    <configurationDirectory>config</configurationDirectory>
+                    <target>${project.build.directory}</target>
+                    <daemons>
+                        <daemon>
+                            <id>farolapi</id>
+                            <mainClass>es.upm.oeg.farolapi.Application</mainClass>
+                            <commandLineArguments>
+                                <commandLineArgument>--spring.profiles.active=prodB</commandLineArgument>
+                            </commandLineArguments>
+                            <platforms>
+                                <platform>jsw</platform>
+                            </platforms>
+                            <generatorConfigurations>
+                                <generatorConfiguration>
+                                    <generator>jsw</generator>
+                                    <includes>
+                                        <include>linux-x86-64</include>
+                                        <include>macosx-universal-64</include>
+                                    </includes>
+                                    <configuration>
+                                        <property>
+                                            <name>wrapper.logfile</name>
+                                            <value>/var/log/farolapi-wrapper.log</value>
+                                        </property>
+                                        <property>
+                                            <name>wrapper.logfile.maxsize</name>
+                                            <value>5m</value>
+                                        </property>
+                                        <property>
+                                            <name>run.as.user.envvar</name>
+                                            <value>root</value>
+                                        </property>
+                                        <property>
+                                            <name>wrapper.on_exit.default</name>
+                                            <value>RESTART</value>
+                                        </property>
+                                    </configuration>
+                                </generatorConfiguration>
+                            </generatorConfigurations>
+                            <jvmSettings>
+                                <initialMemorySize>256M</initialMemorySize>
+                                <maxMemorySize>1024M</maxMemorySize>
+                                <extraArguments>
+                                    <extraArgument>-server</extraArgument>
+                                </extraArguments>
+                            </jvmSettings>
+                        </daemon>
+                    </daemons>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-jsw-scripts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate-daemons</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 

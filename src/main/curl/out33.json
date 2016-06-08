@@ -1,0 +1,7 @@
+HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 07 Jun 2016 22:37:11 GMT
+
+{"cells":[{"latitude":39.472481554247935,"longitude":-6.394659356693213,"lampposts":1846},{"latitude":39.47450830072891,"longitude":-6.351703365503119,"lampposts":530},{"latitude":39.48551961042128,"longitude":-6.369576700518648,"lampposts":1799},{"latitude":39.49458718595078,"longitude":-6.361558442138841,"lampposts":1415},{"latitude":39.467202271298454,"longitude":-6.381084323660389,"lampposts":2326},{"latitude":39.485888424050174,"longitude":-6.4178790449258,"lampposts":297},{"latitude":39.457131678397246,"longitude":-6.371735887151436,"lampposts":2362},{"latitude":39.4517525647352,"longitude":-6.3858887414203895,"lampposts":1232},{"latitude":39.47440067432888,"longitude":-6.372983357332174,"lampposts":2939}]}

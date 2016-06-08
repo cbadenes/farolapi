@@ -1,4 +1,14 @@
 #!/bin/sh
+### BEGIN INIT INFO
+# Provides:          oeg
+# Required-Start:    $syslog
+# Required-Stop:     $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: farolapp
+# Description:
+#
+### END INIT INFO
 SERVICE_NAME=farolapi
 PATH_TO_JAR=/root/farolapi/target/farolapi-0.1.jar
 PID_PATH_NAME=/tmp/farolapi-pid

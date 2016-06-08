@@ -22,7 +22,7 @@ public class Application {
 
     private static final Logger LOG = LoggerFactory.getLogger(Application.class);
 
-    static int port = 8080;
+    static int port = 80;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
