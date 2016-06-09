@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -55,7 +56,7 @@ public class CellController {
                              @RequestParam(value="long2") Double long2,
                              @RequestParam(value="time",required = false) String time,
                              @RequestParam(value="verified",required = false, defaultValue = "true") Boolean verified
-    ) throws IOException {
+    ) throws IOException, ExecutionException {
         LOG.info(StringUtils.repeat("#",50));
         LOG.info("> Cells inside of:");
         LOG.info(StringUtils.repeat("-",10));

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created on 24/05/16:
@@ -31,7 +32,7 @@ public class LamppostRepositoryTest {
     Logger LOG = LoggerFactory.getLogger(LamppostRepositoryTest.class);
 
     @Test
-    public void readDetail() throws IOException, LamppostNotFoundException {
+    public void readDetail() throws IOException, LamppostNotFoundException, ExecutionException {
 
         ApplicationContext ctx = SpringApplication.run(Application.class, new String[]{});
 
@@ -44,7 +45,7 @@ public class LamppostRepositoryTest {
     }
 
     @Test
-    public void readMarks() throws IOException {
+    public void readMarks() throws IOException, ExecutionException {
 
         ApplicationContext ctx = SpringApplication.run(Application.class, new String[]{});
 
@@ -66,7 +67,7 @@ public class LamppostRepositoryTest {
 
 
     @Test
-    public void readMarksInTime() throws IOException {
+    public void readMarksInTime() throws IOException, ExecutionException {
 
         ApplicationContext ctx = SpringApplication.run(Application.class, new String[]{});
 

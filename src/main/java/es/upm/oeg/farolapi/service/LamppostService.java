@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created on 23/05/16:
@@ -134,7 +135,7 @@ public class LamppostService {
     }
 
     public List<LamppostMark> findMarksBy(Point bottomLeft, Point topRight, Optional<Long> time, Boolean verified)
-            throws IOException {
+            throws IOException, ExecutionException {
 
         if (verified){
             return repository.findByLatLong(bottomLeft,topRight,time);
@@ -145,7 +146,7 @@ public class LamppostService {
     }
 
 
-    public LamppostDetail readBy(String id) throws IOException, LamppostNotFoundException {
+    public LamppostDetail readBy(String id) throws IOException, LamppostNotFoundException, ExecutionException {
         LOG.info("Searching lamppost by id: " + id);
         return repository.findById(id);
     }

@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -50,7 +51,7 @@ public class LamppostController {
                              @RequestParam(value="long2") Double long2,
                              @RequestParam(value="time",required = false) String time,
                              @RequestParam(value="verified",required = false, defaultValue = "true") Boolean verified
-    ) throws IOException {
+    ) throws IOException, ExecutionException {
         LOG.info(StringUtils.repeat("#",50));
         LOG.info("> List of lampposts by:");
         LOG.info(StringUtils.repeat("-",10));
@@ -60,7 +61,6 @@ public class LamppostController {
         LOG.info("Long2: " + long2);
         LOG.info("Time: " + time);
         LOG.info("Verified: " + verified);
-        LOG.info(StringUtils.repeat("#",50));
 
         Point bottomLeft    = new Point(lat1,long1);
         Point topRight      = new Point(lat2,long2);
@@ -81,7 +81,7 @@ public class LamppostController {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/lampposts/{id}", method = GET)
-    public LamppostDetail read(@PathVariable("id") String id) throws IOException, LamppostNotFoundException {
+    public LamppostDetail read(@PathVariable("id") String id) throws IOException, LamppostNotFoundException, ExecutionException {
         LOG.info(StringUtils.repeat("#",50));
         LOG.info("> Lampposts by:");
         LOG.info(StringUtils.repeat("-",10));
