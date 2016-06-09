@@ -16,47 +16,33 @@ public class PollutionUtils {
 
     public static Pollution calculate(Boolean covered, String color, Wattage wattage, Height height, Lamp lamp){
 
-        Pollution pollution = Pollution.UNKNOWN;
-
-
+        if (lamp == null) return Pollution.UNKNOWN;
 
         switch (lamp){
             case VSAP:
-                pollution = Pollution.LOW;
-                break;
+                return Pollution.LOW;
             case VMCC:
-                pollution = Pollution.HIGH;
-                break;
+                return Pollution.HIGH;
             case FCBC:
-                pollution = Pollution.MEDIUM;
-                break;
+                return Pollution.MEDIUM;
             case HM:
-                pollution = Pollution.HIGH;
-                break;
+                return Pollution.HIGH;
             case MC:
-                pollution = Pollution.MEDIUM;
-                break;
+                return Pollution.MEDIUM;
             case VSBP:
-                pollution = Pollution.LOW;
-                break;
+                return Pollution.LOW;
             case F:
-                pollution = Pollution.HIGH;
-                break;
+                return Pollution.HIGH;
             case H:
-                pollution = Pollution.HIGH;
-                break;
+                return Pollution.HIGH;
             case I:
-                pollution = Pollution.MEDIUM;
-                break;
+                return Pollution.MEDIUM;
             case LED:
-                pollution = Pollution.HIGH;
-                break;
+                return Pollution.HIGH;
             case PAR:
-                pollution = Pollution.HIGH;
-                break;
+                return Pollution.HIGH;
             case VMAP:
-                pollution = Pollution.HIGH;
-                break;
+                return Pollution.HIGH;
         }
 
 
@@ -66,7 +52,7 @@ public class PollutionUtils {
 //        else if (!wattage.equals(Wattage.HIGH) && height.equals(Height.HIGH)) pollution = Pollution.MEDIUM;
 //        else pollution = Pollution.LOW;
 
-        return pollution;
+        return Pollution.UNKNOWN;
 
 
     }

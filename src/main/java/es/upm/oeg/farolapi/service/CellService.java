@@ -50,12 +50,20 @@ public class CellService {
         List<GeoPoint> points = marks.parallelStream().map( lmark -> new GeoPoint(lmark.getLatitude(),lmark.getLongitude())).collect
                 (Collectors.toList());
 
-        List<CentroidCluster<GeoPoint>> clusterResults = clusterer.cluster(points);
+        List<CellMark> cells = Collections.emptyList();
+        if (points.size()<=cellNumbers){
+            cells = points.stream().map(point -> new CellMark(point.getPoint()[0], point.getPoint()[1],1)).collect
+                    (Collectors.toList());
+        }else{
+            List<CentroidCluster<GeoPoint>> clusterResults = clusterer.cluster(points);
+            cells = clusterResults.parallelStream().map(centroid -> new CellMark(centroid.getCenter()
+                    .getPoint()[0], centroid
+                    .getCenter().getPoint()[1], centroid.getPoints().size())).collect(Collectors.toList());
+        }
 
 
-        List<CellMark> cells = clusterResults.parallelStream().map(centroid -> new CellMark(centroid.getCenter()
-                .getPoint()[0], centroid
-                .getCenter().getPoint()[1], centroid.getPoints().size())).collect(Collectors.toList());
+
+
 
         LOG.info("Cells: " + cells);
 
