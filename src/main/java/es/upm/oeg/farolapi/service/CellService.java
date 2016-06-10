@@ -1,26 +1,25 @@
 package es.upm.oeg.farolapi.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import es.upm.oeg.farolapi.bus.BusManager;
-import es.upm.oeg.farolapi.exception.LamppostNotFoundException;
-import es.upm.oeg.farolapi.model.*;
-import es.upm.oeg.farolapi.repository.ConsensusRepository;
-import es.upm.oeg.farolapi.repository.LamppostRepository;
-import es.upm.oeg.farolapi.utils.AttributeUtils;
+import es.upm.oeg.farolapi.model.CellMark;
+import es.upm.oeg.farolapi.model.GeoPoint;
+import es.upm.oeg.farolapi.model.LamppostMark;
 import lombok.Setter;
+import org.apache.commons.math3.geometry.euclidean.twod.Euclidean2D;
 import org.apache.commons.math3.ml.clustering.CentroidCluster;
 import org.apache.commons.math3.ml.clustering.KMeansPlusPlusClusterer;
-import org.apache.jena.ext.com.google.common.base.Strings;
+import org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator;
+import org.apache.commons.math3.ml.distance.EuclideanDistance;
+import org.apache.commons.math3.stat.clustering.Clusterable;
+import org.apache.commons.math3.stat.clustering.EuclideanDoublePoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**

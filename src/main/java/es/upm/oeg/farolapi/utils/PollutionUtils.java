@@ -4,7 +4,6 @@ import es.upm.oeg.farolapi.model.Height;
 import es.upm.oeg.farolapi.model.Lamp;
 import es.upm.oeg.farolapi.model.Pollution;
 import es.upm.oeg.farolapi.model.Wattage;
-import org.apache.tomcat.jni.Poll;
 
 /**
  * Created on 07/06/16:

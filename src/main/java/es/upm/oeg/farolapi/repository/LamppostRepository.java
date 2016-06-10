@@ -246,10 +246,16 @@ public class LamppostRepository {
 
                     // Pollution
                     PollutionAttribute pollutionAttribute = new PollutionAttribute();
-                    if (soln.contains("contStr")) {
-                        String pollution = soln.get("contStr").asLiteral().getString();
-                        pollutionAttribute.setValue(pollution);
-                    }
+
+                    Boolean covered = !Strings.isNullOrEmpty(cat.getValue())? Boolean.valueOf(cat.getValue()):
+                            false;
+                    Wattage wattage = !Strings.isNullOrEmpty(wat.getValue())? Wattage.valueOf(wat.getValue().toUpperCase()) : null;
+                    Height height   = !Strings.isNullOrEmpty(hat.getValue())? Height.valueOf(hat.getValue().toUpperCase())
+                            : null;
+                    Lamp lamp       = !Strings.isNullOrEmpty(lat.getValue())? Lamp.valueOf(lat.getValue().toUpperCase
+                            ()) : null;
+                    pollutionAttribute.setValue(PollutionUtils.calculate(covered,colorAttribute.getValue(),wattage,
+                            height,lamp).name().toLowerCase());
                     detail.setPollution(pollutionAttribute);
 
                     // StreetViewPov
