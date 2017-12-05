@@ -27,7 +27,7 @@ public class BusManager {
     @Value("${farolapp.achannel.exchange}")
     private String exchange;
 
-    @Value("${farolapp.achannel.host}")
+    @Value("#{environment['FAROLAPI_BUS']?:'${farolapp.achannel.host}'}")
     private String host;
 
     @Value("${farolapp.achannel.port}")

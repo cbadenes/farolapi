@@ -1,0 +1,1 @@
+docker run -it --name farolapi -e FAROLAPI_BUS=rabbitmq -e FAROLAPI_CONSENSUS=consensus:5001/tmp -e FAROLAPI_VIRTUOSO=virtuoso:8890/sparql cbadenes/farolapi

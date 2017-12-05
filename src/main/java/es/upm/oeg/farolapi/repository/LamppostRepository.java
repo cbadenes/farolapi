@@ -34,8 +34,10 @@ public class LamppostRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(LamppostRepository.class);
 
-    @Value("${farolapp.virtuoso.endpoint}")
     @Setter
+    @Value("#{environment['FAROLAPI_VIRTUOSO']?:'${farolapp.virtuoso.endpoint}'}")
+    private String host;
+
     private String endpoint;
 
     private LoadingCache<String, List<LamppostDetail>> detailCache;
@@ -44,6 +46,8 @@ public class LamppostRepository {
 
     @PostConstruct
     public void setup(){
+
+        this.endpoint = "http://"+host;
 
         this.detailCache = CacheBuilder.newBuilder()
                 .maximumSize(1000)

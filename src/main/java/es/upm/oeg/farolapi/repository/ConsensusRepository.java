@@ -27,8 +27,10 @@ public class ConsensusRepository implements ResponseErrorHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConsensusRepository.class);
 
-    @Value("${farolapp.consensus.endpoint}")
     @Setter
+    @Value("#{environment['FAROLAPI_CONSENSUS']?:'${farolapp.consensus.endpoint}'}")
+    private String host;
+
     private String endpoint;
 
     private RestTemplate restTemplate;
@@ -36,6 +38,7 @@ public class ConsensusRepository implements ResponseErrorHandler {
     @PostConstruct
     public void setup(){
         this.restTemplate = new RestTemplate();
+        this.endpoint = "http://"+host;
 //        this.restTemplate.setErrorHandler(this);
     }
 

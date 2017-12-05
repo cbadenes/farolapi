@@ -1,5 +1,21 @@
 # farolapi
 
+## Arranque 
+
+```sh
+docker run --name farolapi cbadenes/farolapi
+```
+
+FarolApi necesita el servicio de mensajería RabbitMQ, el motor de consenso y un SparQL endpoint. Para establecer cada uno de estos servicios puedes utilizar las siguientes variables de entorno: 
+
+```sh
+docker run -d --restart always --name farolapi -e FAROLAPI_BUS=rabbitmq -e FAROLAPI_CONSENSUS=consensus:5001/tmp -e FAROLAPI_VIRTUOSO=virtuoso:8890/sparql cbadenes/farolapi
+```
+
+
+## Consultas
+
+
 1. Listado de farolas dado un area de localización:
 
    GET `<farolapp-uri>/lampposts?lat1=0.1&long1=0.1&lat2=0.2&long2=0.2`
