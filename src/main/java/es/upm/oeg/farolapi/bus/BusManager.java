@@ -46,7 +46,8 @@ public class BusManager {
 
     private BusClient client;
 
-    @PostConstruct
+    private boolean initialized = false;
+
     public void init() {
         try {
             String uri = new StringBuilder().
@@ -61,6 +62,8 @@ public class BusManager {
             LOG.info("RabbitMQ Event-Bus initialized successfully");
         } catch (IOException | TimeoutException | NoSuchAlgorithmException | KeyManagementException | URISyntaxException e) {
             throw new RuntimeException(e);
+        } finally {
+            initialized = true;
         }
     }
 
@@ -76,6 +79,9 @@ public class BusManager {
     }
 
     public void subscribe(BusSubscriber subscriber, String queue, String key) {
+
+        if (!initialized) init();
+
         try {
             LOG.debug("subscribing: " + subscriber + " to: " + queue + "/" + key);
             this.client.consume(exchange, queue, key, subscriber);
@@ -85,6 +91,7 @@ public class BusManager {
     }
 
     public void unsubscribe(BusSubscriber subscriber) {
+        if (!initialized) init();
         try {
             LOG.debug("unsubscribing: " + subscriber);
             this.client.clean(subscriber);
@@ -96,6 +103,7 @@ public class BusManager {
     }
 
     public boolean post(String msg, String key) {
+        if (!initialized) init();
         try {
             LOG.debug("post event: " + msg + " to: " + key);
             this.client.publish(channel, exchange, key, msg.getBytes());
